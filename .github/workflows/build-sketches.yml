@@ -26,10 +26,10 @@ jobs:
         uses: arduino/setup-arduino-cli@v1.1.1
 
       - name: Install Libs and Cores
-        run: tests/install-deps.sh
+        run: ./install-deps.sh
 
       - name: Download sketches
-        run: tests/download-sketches.sh
+        run: ./download-sketches.sh
 
       - name: Compile Sketches
-        run: tests/test.sh ${{ matrix.board }}
+        run: ./test.sh ${{ matrix.board }}
