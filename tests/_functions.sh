@@ -21,13 +21,14 @@ function runTests {
   local FILE
   local OUT
   local BYTES=0
+  # TODO
+  # --build-property "build.extra_flags=${FLAGS}" \ not working for STM32
   for FILE in "${SKETCHES[@]}"; do
     echo "Compiling $(basename $FILE)"
     OUT=$(arduino-cli compile \
       --clean \
       --quiet \
       -b "${BOARD}" \
-      --build-property "build.extra_flags=${FLAGS}" \
       $FILE)
     if [ $? -ne 0 ]; then
       HAS_ERROR=1
