@@ -44,14 +44,12 @@ findSketches ${BOARD}
 echo Install ${CORE} core
 arduino-cli core install ${CORE}
 
-echo "::warning ::WARNING This is just a test"
-
 # Run tests without AES
 RES1=0
 if [ ${#SKETCHES[@]} -gt 0 ]; then
   runTests "${FQBN}" false "${SKETCHES[@]}"
   RES1=$?
-  echo "::notice ::NOTICE Compiled ${#SKETCHES[@]} for ${BOARD}. Average space consumption ${AVG_BYTES} Bytes"
+  echo "::warning ::warning Compiled ${#SKETCHES[@]} for ${BOARD}. Average space consumption ${AVG_BYTES} Bytes"
 fi
 
 # Run tests with AES
@@ -60,6 +58,8 @@ if [ ${#SKETCHES_AES[@]} -gt 0 ]; then
   runTests "${FQBN}" true "${SKETCHES_AES[@]}"
   RES2=$?
 fi
+
+uname -a
 
 if [ $RES1 -gt 0 ] || [ $RES2 -gt 0 ]; then
   >&2 echo "Errors occurred!"
