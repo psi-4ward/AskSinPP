@@ -45,13 +45,19 @@ echo Install ${CORE} core
 arduino-cli core install ${CORE}
 
 # Run tests without AES
-runTests "${FQBN}" false "${SKETCHES[@]}"
-RES1=$?
-echo "::notice ::NOTICE Compiled ${#SKETCHES[@]} for ${BOARD}. Average space consumption ${AVG_BYTES} Bytes"
+RES1=0
+if [ ${#SKETCHES[@]} -gt 0 ]; then
+  runTests "${FQBN}" false "${SKETCHES[@]}"
+  RES1=$?
+  echo "::notice ::NOTICE Compiled ${#SKETCHES[@]} for ${BOARD}. Average space consumption ${AVG_BYTES} Bytes"
+fi
 
 # Run tests with AES
-runTests "${FQBN}" true "${SKETCHES_AES[@]}"
-RES2=$?
+RES2=0
+if [ ${#SKETCHES_AES[@]} -gt 0 ]; then
+  runTests "${FQBN}" true "${SKETCHES_AES[@]}"
+  RES2=$?
+fi
 
 if [ $RES1 -gt 0 ] || [ $RES2 -gt 0 ]; then
   >&2 echo "Errors occurred!"
