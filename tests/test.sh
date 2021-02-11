@@ -49,7 +49,7 @@ RES1=0
 if [ ${#SKETCHES[@]} -gt 0 ]; then
   runTests "${FQBN}" false "${SKETCHES[@]}"
   RES1=$?
-  echo "::warning ::warning Compiled ${#SKETCHES[@]} for ${BOARD}. Average space consumption ${AVG_BYTES} Bytes"
+  echo "::warning ::warning Compiled ${#SKETCHES[@]} Sketches for ${BOARD}. Average space consumption ${AVG_BYTES} Bytes"
 fi
 
 # Run tests with AES
