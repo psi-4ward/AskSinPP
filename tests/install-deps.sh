@@ -35,6 +35,7 @@ GIT_LIBS=(
 # Install Libs
 arduino-cli lib install ${LIBS[*]}
 
+# Install Libs from GIT
 for REPO_URL in ${GIT_LIBS[*]}; do
   REPO="$(basename $REPO_URL | cut -d. -f1)"
   echo "Install $REPO from Git"
@@ -42,12 +43,6 @@ for REPO_URL in ${GIT_LIBS[*]}; do
 done
 wait
 
-# Install Cores
-arduino-cli core update-index
-echo Install arduino:avr core
-arduino-cli core install arduino:avr
-echo Install MightyCore:avr core
-arduino-cli core install MightyCore:avr
 
 # Symlink AskSinPP lib
 echo Symlinking AskSinPP library

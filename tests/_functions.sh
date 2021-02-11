@@ -29,10 +29,13 @@ function runTests {
       -b "${BOARD}" \
       --build-property "build.extra_flags=${FLAGS}" \
       $FILE)
-    [ $? -ne 0 ] && HAS_ERROR=1
+    if [ $? -ne 0 ]; then
+      HAS_ERROR=1
+    else
+      BYTES=$(( $BYTES + $(echo $OUT | grep -oP '(?<=Sketch uses )([0-9]+)') ))
+    fi
     echo "$OUT"
     echo
-    BYTES=$(( $BYTES + $(echo $OUT | grep -oP '(?<=Sketch uses )([0-9]+)') ))
   done
   if $AES ; then
     true
