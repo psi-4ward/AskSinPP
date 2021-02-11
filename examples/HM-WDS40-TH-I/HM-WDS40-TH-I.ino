@@ -1,6 +1,7 @@
 //- -----------------------------------------------------------------------------------------------------------------------
 // AskSin++
 // 2016-10-31 papa Creative Commons - http://creativecommons.org/licenses/by-nc-sa/3.0/de/
+// ci-test=yes board=328p aes=no
 //- -----------------------------------------------------------------------------------------------------------------------
 
 // define this to read the device id, serial and device type from bootloader section
@@ -37,7 +38,7 @@
 // Internal measuring: AVR voltage
 #define BAT_SENSOR BatterySensor
 // External measuring: Potential devider on GPIO; required if a StepUp converter is used
-// one can consider lower thresholds (low=20; cri=13) 
+// one can consider lower thresholds (low=20; cri=13)
 //#define BAT_SENSOR BatterySensorUni<17,7,3000> // <SensPIN, ActivationPIN, RefVcc>
 
 // === Sensor offset settings ===
@@ -139,7 +140,7 @@ void setup () {
   DINIT(57600,ASKSIN_PLUS_PLUS_IDENTIFIER); // Init serial console
   sdev.init(hal);
   buttonISR(cfgBtn,CONFIG_BUTTON_PIN); // Register btn interrupt
-  hal.initBattery(60UL*60,BAT_VOLT_LOW,BAT_VOLT_CRITICAL); // Measure Battery every 1h 
+  hal.initBattery(60UL*60,BAT_VOLT_LOW,BAT_VOLT_CRITICAL); // Measure Battery every 1h
   sdev.initDone();
   DDEVINFO(sdev); // Print DeviceInfo to serial console
 }
@@ -151,7 +152,7 @@ void loop() {
     if( hal.battery.critical() ) {
       // this call will never return
       hal.activity.sleepForever(hal);
-    }    
+    }
     hal.sleep<>();
   }
 }

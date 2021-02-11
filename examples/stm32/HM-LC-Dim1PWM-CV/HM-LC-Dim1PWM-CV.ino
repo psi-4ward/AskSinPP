@@ -1,6 +1,7 @@
 //- -----------------------------------------------------------------------------------------------------------------------
 // AskSin++
 // 2018-08-09 papa Creative Commons - http://creativecommons.org/licenses/by-nc-sa/3.0/de/
+// ci-test=yes board=bluepill aes=no
 //- -----------------------------------------------------------------------------------------------------------------------
 
 // define this to read the device id, serial and device type from bootloader section
@@ -122,7 +123,7 @@ void setup () {
 
   sdev.initDone();
   sdev.led().invert(true);
-  
+
   // Adjust CC1101 frequency
   // hal.radio.initReg(CC1101_FREQ2, 0x21);
   // hal.radio.initReg(CC1101_FREQ1, 0x65);

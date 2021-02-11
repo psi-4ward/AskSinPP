@@ -3,6 +3,7 @@
 // 2016-10-31 papa Creative Commons - http://creativecommons.org/licenses/by-nc-sa/3.0/de/
 // 2018-10-07 jp112sdl Creative Commons - http://creativecommons.org/licenses/by-nc-sa/3.0/de/
 // 2019-01-10 scuba82 Creative Commons - http://creativecommons.org/licenses/by-nc-sa/3.0/de/
+// ci-test=yes board=328p aes=yes
 //- -----------------------------------------------------------------------------------------------------------------------
 
 // define this to read the device id, serial and device type from bootloader section
@@ -20,8 +21,8 @@
 
 #define NDEBUG
 
-// use external EEProm 24c32 via I2C 
-#define STORAGEDRIVER at24cX<0x50,128,32> 
+// use external EEProm 24c32 via I2C
+#define STORAGEDRIVER at24cX<0x50,128,32>
 
 #define EI_NOTEXTERNAL
 #include <Wire.h>
@@ -48,7 +49,7 @@
 #define NTC_B 3435 // b value of ntc (see datasheet)
 #define NTC_OVERSAMPLING 2 // number of additional bits by oversampling (should be between 0 and 6, highly increases number of measurements)
 
-// Phase Cut mode 
+// Phase Cut mode
 #define PHASECUT_MODE 0 // 0 = trailing-edge phase cut; 1 = leading-edge phase cut
 
 // number of available peers per channel
@@ -106,7 +107,7 @@ OverloadSens overload;
 
 class TempSens : public Alarm {
   Ntc<NTC_SENSE_PIN,NTC_R0,NTC_B,NTC_ACTIVATOR_PIN,NTC_T0,NTC_OVERSAMPLING> ntc;
-  
+
   public:
   TempSens () : Alarm(0) {}
   virtual ~TempSens () {}
@@ -135,7 +136,7 @@ void setup () {
   if( control.init(hal,DIMMERPIN) ){
 	sdev.channel(1).peer(btn1.peer(), btn2.peer());
   }
- 
+
   buttonISR(cfgBtn, CONFIG_BUTTON_PIN);
   buttonISR(btn1, BTN_PIN_1);
   buttonISR(btn2, BTN_PIN_2);

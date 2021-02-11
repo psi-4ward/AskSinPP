@@ -1,6 +1,7 @@
 //- -----------------------------------------------------------------------------------------------------------------------
 // AskSin++
 // 2016-10-31 papa Creative Commons - http://creativecommons.org/licenses/by-nc-sa/3.0/de/
+// ci-test=yes board=328p aes=no
 //- -----------------------------------------------------------------------------------------------------------------------
 
 // define this to read the device id, serial and device type from bootloader section
@@ -285,7 +286,7 @@ class MeterChannel : public Channel<HalType,MeterList1,EmptyList,List4,PEERS_PER
   Message           msg;
   uint8_t           msgcnt;
   bool              boot;
-  
+
 private:
 
 public:
@@ -310,7 +311,7 @@ public:
     counter++;
 
     device().led().ledOn(millis2ticks(300));
-    
+
     #ifndef NDEBUG
       DHEXLN(counter);
     #endif
@@ -337,7 +338,7 @@ public:
       counter = 0;
     }
     counterSum += c;
-    
+
     uint16_t sigs = 1;
     switch( metertype ) {
       case 1: sigs = l1.constantGas(); break;
@@ -352,15 +353,15 @@ public:
       actualConsumption = (c * sigs * 10) / (MSG_CYCLE / seconds2ticks(60));
 
       // TODO handle overflow
-      
+
       ((GasPowerEventCycleMsg&)msg).init(msgcnt++,boot,consumptionSum,actualConsumption);
       break;
-    case 2: 
-    case 4: 
+    case 2:
+    case 4:
       // calculate sum
       consumptionSum = (10000 * counterSum / sigs);
       // TODO handle overflow
-      
+
       // calculate consumption whithin the last MSG_CYCLE period
       actualConsumption = (60 * 100000 * c) / (sigs * (MSG_CYCLE / seconds2ticks(60)));
       ((PowerEventCycleMsg&)msg).init(msgcnt++,boot,consumptionSum,actualConsumption);

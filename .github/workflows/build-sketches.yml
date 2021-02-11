@@ -8,9 +8,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: pa-pa-328p
-          - name: jp112sdl-328p
-          - name: 644p
+          - board: 328p
+          - board: 644p
+          - board: bluepill
 
     steps:
       # GIT Checkout
@@ -26,4 +26,4 @@ jobs:
         run: tests/download-sketches.sh
 
       - name: Compile Sketches
-        run: tests/test_${{ matrix.name }}.sh
+        run: tests/test.sh ${{ matrix.board }}
