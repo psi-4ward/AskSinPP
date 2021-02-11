@@ -8,8 +8,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - script: test-328p.sh
-          - script: test-644p.sh
+          - board: pa-pa-328p
+          - board: jp112sdl-328p
+          - board: 644p
 
     steps:
       # GIT Checkout
@@ -25,4 +26,4 @@ jobs:
         run: tests/download-sketches.sh
 
       - name: Compile Sketches
-        run: tests/${{ matrix.script }}
+        run: tests/test-${{ matrix.script }}.sh
