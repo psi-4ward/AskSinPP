@@ -45,10 +45,10 @@ findSketches ${BOARD}
 
 # Install cores
 echo Install arduino:avr core
-arduino-cli core install --log-level Warning arduino:avr
+arduino-cli core install --log-level warn arduino:avr
 if [ -n "${CORE}" ] ; then
   echo Install ${CORE} core
-  arduino-cli core install --log-level Warning ${CORE}
+  arduino-cli core install --log-level warn ${CORE}
 fi
 
 # Run tests without AES
