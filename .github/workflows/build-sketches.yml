@@ -26,7 +26,7 @@ jobs:
         uses: arduino/setup-arduino-cli@v1.1.1
 
       - name: Install Libs and Cores
-        run: ./install-deps.sh
+        run: pwd && ./install-deps.sh
 
       - name: Download sketches
         run: ./download-sketches.sh
