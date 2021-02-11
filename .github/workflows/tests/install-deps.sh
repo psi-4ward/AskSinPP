@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd $DIR
+source _functions.sh
 
 # Libs included in Lib-Manager
 LIBS=(
@@ -43,7 +42,7 @@ for REPO_URL in ${GIT_LIBS[*]}; do
 done
 wait
 
-
 # Symlink AskSinPP lib
 echo Symlinking AskSinPP library
-ln -sf $(realpath $DIR/..) $(realpath $DIR/Arduino/libraries/AskSinPP)
+ln -sf $BASEDIR $(realpath $DIR/Arduino/libraries/AskSinPP)
+
