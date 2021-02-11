@@ -12,6 +12,7 @@ AES_FLAGS="-DUSE_AES -DHM_DEF_KEY=0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0
 ####################################
 function runTests {
   [ -z "AVG_BYTES" ] && AVG_BYTES=0
+  [ -z "AVG_BYTES_AES" ] && AVG_BYTES_AES=0
   local BOARD=$1
   shift
   local AES=${1:-false}
@@ -40,10 +41,9 @@ function runTests {
     echo
   done
   if $AES ; then
-    true
+    AVG_BYTES_AES=$(( $BYTES / ${#SKETCHES[@]} ))
   else
     AVG_BYTES=$(( $BYTES / ${#SKETCHES[@]} ))
-    echo $BYTES / ${#SKETCHES[@]} = $AVG_BYTES
   fi
   return $HAS_ERROR
 }
