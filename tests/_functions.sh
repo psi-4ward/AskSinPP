@@ -1,3 +1,5 @@
+AES_FLAGS="-DUSE_AES -DHM_DEF_KEY=0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,0x10 -DHM_DEF_KEY_INDEX=0"
+
 ####################################
 # exec test-runners
 # params:
@@ -16,19 +18,18 @@ function runTests {
   shift
   local SKETCHES=("$@")
   local HAS_ERROR=0
-  local AES_FLAGS="-DUSE_AES -DHM_DEF_KEY=0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,0x10 -DHM_DEF_KEY_INDEX=0"
   $AES && local FLAGS="${AES_FLAGS}"
   local FILE
   local OUT
   local BYTES=0
-  # TODO
-  # --build-property "build.extra_flags=${FLAGS}" \ not working for STM32
+  echo AES? $AES $FLAGS
   for FILE in "${SKETCHES[@]}"; do
     echo "Compiling $(basename $FILE)"
     OUT=$(arduino-cli compile \
       --clean \
       --quiet \
       -b "${BOARD}" \
+      --build-property "compiler.cpp.extra_flags=${FLAGS}" \
       $FILE)
     if [ $? -ne 0 ]; then
       HAS_ERROR=1

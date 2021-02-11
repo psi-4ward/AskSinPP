@@ -62,6 +62,7 @@ RES2=0
 if [ ${#SKETCHES_AES[@]} -gt 0 ]; then
   runTests "${FQBN}" true "${SKETCHES_AES[@]}"
   RES2=$?
+  echo "::warning ::warning Compiled ${#SKETCHES[@]} Sketches with AES supprt for ${BOARD}. Average space consumption ${AVG_BYTES} Bytes"
 fi
 
 if [ $RES1 -gt 0 ] || [ $RES2 -gt 0 ]; then
