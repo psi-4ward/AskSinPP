@@ -33,7 +33,7 @@ jobs:
 
       # Get arduino cli
       - name: Setup Arduino CLI
-        uses: arduino/setup-arduino-cli@v1.0.0
+        uses: arduino/setup-arduino-cli@v1.1.1
 
       - name: Install platform
         run: |
