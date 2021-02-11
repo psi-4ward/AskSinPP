@@ -22,7 +22,7 @@ jobs:
         uses: arduino/setup-arduino-cli@v1.1.1
 
       - name: a
-        run: pwd ; ls -la
+        run: pwd ; ls -la .github/workflows
 
       - name: Install Libs and Cores
         run: .github/workflows/tests/install-deps.sh
