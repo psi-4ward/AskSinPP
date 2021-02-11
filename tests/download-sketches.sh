@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd $DIR
+
+mkdir -p sketches
+cd sketches
+
+# Sketches from Git-Repositories
+GIT_REPOS=(
+  # Jerome
+  "https://github.com/jp112sdl/Beispiel_AskSinPP.git"
+  "https://github.com/jp112sdl/HB-UNI-Sen-LEV-US.git"
+  "https://github.com/jp112sdl/HB-UNI-Sen-DIST-US.git"
+  "https://github.com/jp112sdl/HB-UNI-Sen-CAP-MOIST.git"
+  "https://github.com/jp112sdl/HB-UNI-SenAct-4-4.git"
+  "https://github.com/jp112sdl/HB-UNI-DMX-MASTER.git"
+  "https://github.com/jp112sdl/HB-UNI-Sen-PRESS.git"
+  "https://github.com/jp112sdl/HB-UNI-Sen-WEIGHT.git"
+  "https://github.com/jp112sdl/HB-Dis-EP-42BW.git"
+  "https://github.com/jp112sdl/HB-OU-MP3-LED.git"
+  "https://github.com/jp112sdl/HB-RC-12-EP.git"
+  "https://github.com/jp112sdl/HB-RC-4-Dis-TH.git"
+  "https://github.com/jp112sdl/HB-OU-MOT-SERVO.git"
+  "https://github.com/jp112sdl/HB-UNI-Sen-RFID-RC.git"
+  "https://github.com/jp112sdl/HB-UNI-Sen-TEMP-MAX6675.git"
+  "https://github.com/jp112sdl/HM-SEC-RHS-ATmega168.git"
+
+  # TomMajor
+  "https://github.com/TomMajor/SmartHome.git"
+)
+
+# Clone / update Repos in parallel
+for REPO_URL in ${GIT_REPOS[*]}; do
+  REPO="$(basename $REPO_URL | cut -d. -f1)"
+  if [ -e "$REPO" ] ; then
+    echo "Pull changes from $REPO"
+    (cd $REPO && git pull -q --depth 1) &
+  else
+    echo "Clone from $REPO"
+    git clone -q --no-tags --depth 1 "$REPO_URL" &
+  fi
+done
+wait

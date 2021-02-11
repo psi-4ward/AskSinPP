@@ -2,54 +2,27 @@ on:
   - push
   - pull_request
 
-env:
-  IDE_VERSION: 1.8.13
-  BOARDMAPLE: "stm32duino:STM32F1:mapleMini:bootloader_version=original,opt=osstd"
-  BOARDSTM: "stm32duino:STM32F1:genericSTM32F103C:device_variant=STM32F103C8,opt=osstd"
-  BOARD644P: "MightyCore:avr:644:pinout=bobuino,variant=modelP,LTO=Os,clock=8MHz_internal"
-  BOARD1284P: "MightyCore:avr:1284:pinout=standard,variant=modelP,LTO=Os,clock=8MHz_internal"
-  BOARD328P: "arduino:avr:pro:cpu=8MHzatmega328"
-  BOARD168P: "arduino:avr:pro:cpu=8MHzatmega168"
-  BOARD: $BOARD328P
-
 jobs:
   build-sketches:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
         include:
-          - board: $BOARD328P
-            sketch: examples/HM-SEC-MDIR/HM-SEC-MDIR.ino
-          - board: $BOARD328P
-            sketch: examples/HM-SEC-RHS/HM-SEC-RHS.ino
-          - board: $BOARD328P
-            sketch: examples/HM-WDS10-TH-O/HM-WDS10-TH-O.ino
-          - board: $BOARD328P
-            sketch: Beispiel_AskSinPP/examples/HB-UNI-Sen-PRESS.ino
+          - script: test-328p.sh
+          - script: test-644p.sh
 
     steps:
       # GIT Checkout
       - uses: actions/checkout@v2
 
-      # Get arduino cli
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
 
-      - name: Install platform
-        run: |
-          arduino-cli core update-index
-          arduino-cli core install arduino:avr
+      - name: Install Libs and Cores
+        run: tests/install-deps.sh
 
-      - name: Install libs
-        run: |
-          arduino-cli lib install OneWire
-        # TODO clone / install other libs
-        # use --depth 1 to avoid fetching full git history
+      - name: Download sketches
+        run: tests/download-sketches.sh
 
-      - name: Fetch 3rd-party sketches
-        run: |
-          git clone --depth 1 https://github.com/jp112sdl/Beispiel_AskSinPP.git
-          git clone --depth 1 https://github.com/jp112sdl/HB-UNI-Sen-LEV-US.git
-
-      - name: Compile Sketch
-        run: arduino-cli compile -b ${{ matrix.board }} ${{ matrix.sketch }}
+      - name: Compile Sketches
+        run: tests/${{ matrix.script }}
