@@ -2,10 +2,6 @@ on:
   - push
   - pull_request
 
-defaults:
-  run:
-    working-directory: .github/workflows/tests/
-
 jobs:
   build-sketches:
     runs-on: ubuntu-20.04
@@ -25,14 +21,11 @@ jobs:
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
 
-      - name: pwd
-        run: pwd
-
       - name: Install Libs and Cores
-        run: ./install-deps.sh
+        run: .github/workflows/tests/install-deps.sh
 
       - name: Download sketches
-        run: ./download-sketches.sh
+        run: .github/workflows/tests/download-sketches.sh
 
       - name: Compile Sketches
-        run: ./test.sh ${{ matrix.board }}
+        run: .github/workflows/tests/test.sh ${{ matrix.board }}
