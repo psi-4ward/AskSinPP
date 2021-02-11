@@ -26,4 +26,4 @@ jobs:
         run: tests/download-sketches.sh
 
       - name: Compile Sketches
-        run: tests/test-${{ matrix.name }}.sh
+        run: tests/test_${{ matrix.name }}.sh
