@@ -21,6 +21,8 @@ jobs:
           - board: $BOARD328P
             sketch: examples/HM-SEC-MDIR/HM-SEC-MDIR.ino
           - board: $BOARD328P
+            sketch: examples/HM-SEC-RHS/HM-SEC-RHS.ino
+          - board: $BOARD328P
             sketch: examples/HM-WDS10-TH-O/HM-WDS10-TH-O.ino
           - board: $BOARD328P
             sketch: Beispiel_AskSinPP/examples/HB-UNI-Sen-PRESS.ino
