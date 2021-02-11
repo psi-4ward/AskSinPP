@@ -44,6 +44,8 @@ findSketches ${BOARD}
 echo Install ${CORE} core
 arduino-cli core install ${CORE}
 
+echo "::warning ::WARNING This is just a test"
+
 # Run tests without AES
 RES1=0
 if [ ${#SKETCHES[@]} -gt 0 ]; then
