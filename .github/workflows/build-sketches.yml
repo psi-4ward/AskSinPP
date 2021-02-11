@@ -2,6 +2,10 @@ on:
   - push
   - pull_request
 
+defaults:
+  run:
+    working-directory: .github/workflows/tests
+
 jobs:
   build-sketches:
     runs-on: ubuntu-20.04
@@ -22,13 +26,13 @@ jobs:
         uses: arduino/setup-arduino-cli@v1.1.1
 
       - name: a
-        run: pwd ; ls -la .github/workflows
+        run: pwd ; ls -la
 
       - name: Install Libs and Cores
-        run: .github/workflows/tests/install-deps.sh
+        run: ./install-deps.sh
 
       - name: Download sketches
-        run: .github/workflows/tests/download-sketches.sh
+        run: ./download-sketches.sh
 
       - name: Compile Sketches
-        run: .github/workflows/tests/test.sh ${{ matrix.board }}
+        run: ./test.sh ${{ matrix.board }}
