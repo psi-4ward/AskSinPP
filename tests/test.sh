@@ -2,6 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR
 source _functions.sh
+uname -a
 
 SKETCH_PATHES=(
   ../examples
@@ -17,7 +18,7 @@ fi
 
 case "$BOARD" in
   328p)
-    CORE=arduino:avr
+    CORE=""
     FQBN=arduino:avr:pro:cpu=8MHzatmega328
     ;;
   644p)
@@ -41,8 +42,14 @@ esac
 findSketches ${BOARD}
 
 # Install core
-echo Install ${CORE} core
-arduino-cli core install ${CORE}
+
+echo Install arduino:avr core
+arduino-cli core install arduino:avr
+
+if [ -n "${CORE}" ] ; then
+  echo Install ${CORE} core
+  arduino-cli core install ${CORE}
+fi
 
 # Run tests without AES
 RES1=0
@@ -58,8 +65,6 @@ if [ ${#SKETCHES_AES[@]} -gt 0 ]; then
   runTests "${FQBN}" true "${SKETCHES_AES[@]}"
   RES2=$?
 fi
-
-uname -a
 
 if [ $RES1 -gt 0 ] || [ $RES2 -gt 0 ]; then
   >&2 echo "Errors occurred!"
